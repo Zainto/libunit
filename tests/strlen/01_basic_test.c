@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_catcher.c                                   :+:      :+:    :+:   */
+/*   01_basic_test.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cempassi <cempassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/02 16:24:31 by cempassi          #+#    #+#             */
-/*   Updated: 2018/12/02 17:11:07 by cempassi         ###   ########.fr       */
+/*   Created: 2018/12/02 16:43:54 by cempassi          #+#    #+#             */
+/*   Updated: 2018/12/02 16:46:13 by cempassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <stdlib.h>
 #include "libft.h"
+#include <string.h>
 
-static void sigbuss_catch(int signal)
+int		basic_test(void)
 {
-	exit(signal);
-}
-
-static void sigsegv_catch(int signal)
-{
-	exit(signal);
-}
-
-void	init_signal_catcher(void)
-{
-	if (signal(SIGBUS, sigbuss_catch) == SIG_ERR)
-		ft_putendl("Error occured catching the SIGBUS.");
-	if (signal(SIGSEGV, sigsegv_catch) == SIG_ERR)
-		ft_putendl("Error occured catching the SIGSEGV.");
+	if (ft_strlen("Hello") == strlen("Hello"))
+		return (0);
+	else
+		return (-1);
 }

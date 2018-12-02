@@ -14,48 +14,56 @@ PURPLE=\033[0;35m
 CYAN=\033[0;36m
 WHITE=\033[0;37m
 
-NAME = libunit.a
-EXEC = test
+NAME = UnitTest
 LIBFT = $(PATHL)libft.a
+LIBUT = $(PATHU)libunit.a
 CLEANUP =rm -rf
 MKDIR = mkdir -p
 
 PATHO =objs/
 PATHI =includes/
-PATHL =libft/
-PATHS = framework/
-PATHILIB =libft/includes/
+PATHL =../libft/
+PATHU =../
+PATHILIBFT =../libft/includes/
+PATHILIBUT =../includes/
 
+PATHSTRLEN = strlen/
 INCS += libft.h
 INCS += libunit.h
+INCS += unittest.h
 
-SRCS += $(PATHS)run_test.c
-SRCS += $(PATHS)signal_catcher.c
-OBJS = $(patsubst $(PATHS)%.c, $(PATHO)%.o, $(SRCS))
+SRCS += main.c
+_SRCSTRLEN += $(PATHSTRLEN)00_launcher.c
+_SRCSTRLEN += $(PATHSTRLEN)01_basic_test.c
+
+_OBJS = $(patsubst %.c, $(PATHO)%.o, $(SRCS))
+_OBJSTRLEN = $(patsubst $(PATHSTRLEN)%.c, $(PATHO)%.o, $(_SRCSTRLEN))
+OBJS = $(_OBJS) $(_OBJSTRLEN)
 
 WFLAGS +=-Wall
 WFLAGS +=-Werror
 WFLAGS +=-Wextra
-IFLAGS =-I$(PATHI) -I$(PATHILIB)
+IFLAGS =-I$(PATHI) -I$(PATHILIBFT) -I$(PATHILIBUT)
 CFLAGS =$(WFLAGS)
 
 .PHONY: all clean fclean
 
-vpath %.c framework
-vpath %.h includes 
-vpath %.h libft/includes
+vpath %.c strlen
+vpath %.h includes
+vpath %.h ../includes 
+vpath %.h ../libft/includes
 
 all : $(PATHO) $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT)
-	ar rus $@ $(OBJS)
+$(NAME): $(LIBFT) $(LIBUT) $(OBJS)
+	$(CC) -o $@ $^
 	@printf "$(GREEN)$@ is ready.\n$(NC)"
-
-$(EXEC): $(PATHO) $(OBJ) $(NAME)
-	$(CC) $(IFLAGS) -o $@ $(NAME) $(LIBFT) main.c
 
 $(LIBFT) : 
 	$(MAKE) -C $(PATHL) 
+
+$(LIBUT) : 
+	$(MAKE) -C $(PATHU) 
 
 $(OBJS): $(PATHO)%.o : %.c $(INCS)
 	$(COMPILE) $(CFLAGS) $(IFLAGS) $< -o $@

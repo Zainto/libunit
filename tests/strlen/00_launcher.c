@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_catcher.c                                   :+:      :+:    :+:   */
+/*   00_launcher.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cempassi <cempassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/02 16:24:31 by cempassi          #+#    #+#             */
-/*   Updated: 2018/12/02 17:11:07 by cempassi         ###   ########.fr       */
+/*   Created: 2018/12/02 16:43:43 by cempassi          #+#    #+#             */
+/*   Updated: 2018/12/02 17:23:00 by cempassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <stdlib.h>
-#include "libft.h"
+#include "01_basic_test.h"
+#include "libunit.h"
 
-static void sigbuss_catch(int signal)
+int		strlen_launcher(void)
 {
-	exit(signal);
-}
+	t_list *testList;
 
-static void sigsegv_catch(int signal)
-{
-	exit(signal);
-}
-
-void	init_signal_catcher(void)
-{
-	if (signal(SIGBUS, sigbuss_catch) == SIG_ERR)
-		ft_putendl("Error occured catching the SIGBUS.");
-	if (signal(SIGSEGV, sigsegv_catch) == SIG_ERR)
-		ft_putendl("Error occured catching the SIGSEGV.");
+	testList = NULL;
+	load_test(&testList, "Basic test", basic_test);
+	return (run_test(&testList));
 }

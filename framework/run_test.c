@@ -6,7 +6,7 @@
 /*   By: cempassi <cempassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 05:38:31 by cempassi          #+#    #+#             */
-/*   Updated: 2018/12/02 16:31:39 by cempassi         ###   ########.fr       */
+/*   Updated: 2018/12/02 17:10:37 by cempassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static t_list	*parent_manager(t_list	*to_test)
 	int		checker;
 
 	wait(&checker);
-	if (WIFSIGNALED)
+	if (WIFSIGNALED(checker))
 	{
 		if (WTERMSIG(checker) == SIGSEGV)
 			ft_putendl("[SEGV]");
@@ -37,7 +37,7 @@ static t_list	*parent_manager(t_list	*to_test)
 	return (to_test->next);
 }
 
-void	load_test(t_list **lst, char *name, void (*f)(void))
+void	load_test(t_list **lst, char *name, int (*f)(void))
 {
 	t_list	*current;
 	t_test	tmp;
