@@ -29,6 +29,7 @@ INCS += libft.h
 INCS += libunit.h
 
 SRCS += run_test.c
+SRCS += signal_catcher.c
 MAIN = main.c
 OBJS =$(patsubst %.c, $(PATHO)%.o, $(SRCS))
 
