@@ -29,7 +29,7 @@ INCS += libft.h
 INCS += libunit.h
 
 SRCS += run_test.c
-SRCS += main.c
+MAIN = main.c
 OBJS =$(patsubst %.c, $(PATHO)%.o, $(SRCS))
 
 WFLAGS +=-Wall
@@ -51,7 +51,7 @@ $(NAME): $(OBJS) $(LIBFT)
 	ar rus $@ $<
 	@printf "$(GREEN)$@ is ready.\n$(NC)"
 
-$(EXEC): $(NAME)
+$(EXEC): $(PATHO) $(OBJ) $(NAME)
 	$(CC) $(IFLAGS) -o $@ $(NAME) $(LIBFT) main.c
 
 $(LIBFT) : 

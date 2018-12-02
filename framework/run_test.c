@@ -6,7 +6,7 @@
 /*   By: cempassi <cempassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 05:38:31 by cempassi          #+#    #+#             */
-/*   Updated: 2018/12/02 14:43:15 by cempassi         ###   ########.fr       */
+/*   Updated: 2018/12/02 14:49:09 by cempassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 static void sigbuss_catch(int signal)
 {
-	(void)signal;
+	printf("Signal is = %d\n", signal);
 	ft_putendl("Sigbuss caught");
 	exit(EXIT_FAILURE);
 }
@@ -28,7 +28,7 @@ static void sigbuss_catch(int signal)
 
 static void sigsegv_catch(int signal)
 {
-	(void)signal;
+	printf("Signal is = %d\n", signal);
 	ft_putendl("Segfault caught");
 	exit(EXIT_FAILURE);
 }
