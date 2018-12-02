@@ -105,7 +105,7 @@ IFLAGS =-I $(PATHI)
 CFLAGS =$(WFLAGS)
 
 .PHONY: all clean fclean
-.SILENT:
+.SILENT: 
 
 vpath %.c .
 vpath %.h includes
@@ -125,7 +125,7 @@ $(PATHO) :
 
 clean:
 	@$(CLEANUP) $(PATHO)*.o
-	@printf "$(RED)All *.o files removed\n$(NC)"
+	@printf "$(RED)All *.o from libft files removed\n$(NC)"
 
 fclean: clean
 	$(CLEANUP) $(NAME)

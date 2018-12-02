@@ -47,6 +47,7 @@ IFLAGS =-I$(PATHI) -I$(PATHILIBFT) -I$(PATHILIBUT)
 CFLAGS =$(WFLAGS)
 
 .PHONY: all clean fclean
+.SILENT: 
 
 vpath %.c strlen
 vpath %.h includes
@@ -58,6 +59,9 @@ all : $(PATHO) $(NAME)
 $(NAME): $(LIBFT) $(LIBUT) $(OBJS)
 	$(CC) -o $@ $^
 	@printf "$(GREEN)$@ is ready.\n$(NC)"
+
+test : $(PATHO) $(NAME)
+	./$(NAME)
 
 $(LIBFT) : 
 	$(MAKE) -C $(PATHL) 
@@ -74,14 +78,13 @@ $(PATHO) :
 
 clean:
 	@$(CLEANUP) $(PATHO)*.o
-	@printf "$(RED)All *.o files removed\n$(NC)"
-	$(MAKE) -C $(PATHL) clean
-	@$(CLEANUP) $(EXEC)
-	@printf "$(RED)Test exec removed\n$(NC)"
+	@printf "$(RED)All *.o files for UnitTest removed\n$(NC)"
+	$(MAKE) -C $(PATHU) clean
 
 fclean: clean
 	$(CLEANUP) $(NAME)
 	$(CLEANUP) $(PATHO)
+	$(MAKE) -C $(PATHU) fclean
 	@printf "$(RED)$(NAME) deleted\n$(NC)"
 
 re : fclean all

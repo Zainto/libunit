@@ -22,7 +22,7 @@ MKDIR = mkdir -p
 
 PATHO =objs/
 PATHI =includes/
-PATHL =libft/
+PATHL = libft/
 PATHS = framework/
 PATHILIB =libft/includes/
 
@@ -40,6 +40,7 @@ IFLAGS =-I$(PATHI) -I$(PATHILIB)
 CFLAGS =$(WFLAGS)
 
 .PHONY: all clean fclean
+.SILENT: 
 
 vpath %.c framework
 vpath %.h includes 
@@ -47,17 +48,14 @@ vpath %.h libft/includes
 
 all : $(PATHO) $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT)
+$(NAME): $(OBJS)
 	ar rus $@ $(OBJS)
 	@printf "$(GREEN)$@ is ready.\n$(NC)"
 
-$(EXEC): $(PATHO) $(OBJ) $(NAME)
-	$(CC) $(IFLAGS) -o $@ $(NAME) $(LIBFT) main.c
-
 $(LIBFT) : 
-	$(MAKE) -C $(PATHL) 
+	$(MAKE) -C $(PATHL)
 
-$(OBJS): $(PATHO)%.o : %.c $(INCS)
+$(OBJS): $(PATHO)%.o : %.c $(INCS) $(LIBFT)
 	$(COMPILE) $(CFLAGS) $(IFLAGS) $< -o $@
 	@printf "$(BLUE)Compiling $<\n$(NC)"
 
@@ -66,14 +64,13 @@ $(PATHO) :
 
 clean:
 	@$(CLEANUP) $(PATHO)*.o
-	@printf "$(RED)All *.o files removed\n$(NC)"
+	@printf "$(RED)All *.o files from $(NAME) removed\n$(NC)"
 	$(MAKE) -C $(PATHL) clean
-	@$(CLEANUP) $(EXEC)
-	@printf "$(RED)Test exec removed\n$(NC)"
 
 fclean: clean
 	$(CLEANUP) $(NAME)
 	$(CLEANUP) $(PATHO)
+	$(MAKE) -C $(PATHL) fclean
 	@printf "$(RED)$(NAME) deleted\n$(NC)"
 
 re : fclean all
