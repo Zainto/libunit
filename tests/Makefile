@@ -27,17 +27,20 @@ PATHU =../
 PATHILIBFT =../libft/includes/
 PATHILIBUT =../includes/
 
-PATHSTRLEN = strlen/
+PATHBASIC = basic/
 INCS += libft.h
 INCS += libunit.h
 INCS += unittest.h
 
 SRCS += main.c
-_SRCSTRLEN += $(PATHSTRLEN)00_launcher.c
-_SRCSTRLEN += $(PATHSTRLEN)01_basic_test.c
+_SRCSTRLEN += $(PATHBASIC)00_launcher.c
+_SRCSTRLEN += $(PATHBASIC)01_basic_test.c
+_SRCSTRLEN += $(PATHBASIC)02_ko_test.c
+_SRCSTRLEN += $(PATHBASIC)03_segfault_test.c
+_SRCSTRLEN += $(PATHBASIC)04_buss_error_test.c
 
 _OBJS = $(patsubst %.c, $(PATHO)%.o, $(SRCS))
-_OBJSTRLEN = $(patsubst $(PATHSTRLEN)%.c, $(PATHO)%.o, $(_SRCSTRLEN))
+_OBJSTRLEN = $(patsubst $(PATHBASIC)%.c, $(PATHO)%.o, $(_SRCSTRLEN))
 OBJS = $(_OBJS) $(_OBJSTRLEN)
 
 WFLAGS +=-Wall
@@ -49,7 +52,7 @@ CFLAGS =$(WFLAGS)
 .PHONY: all clean fclean
 .SILENT: 
 
-vpath %.c strlen
+vpath %.c basic
 vpath %.h includes
 vpath %.h ../includes 
 vpath %.h ../libft/includes

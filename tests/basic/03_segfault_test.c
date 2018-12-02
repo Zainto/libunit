@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   01_basic_test.c                                    :+:      :+:    :+:   */
+/*   03_segfault_test.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cempassi <cempassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/02 16:43:54 by cempassi          #+#    #+#             */
-/*   Updated: 2018/12/02 16:46:13 by cempassi         ###   ########.fr       */
+/*   Created: 2018/12/02 18:29:46 by cempassi          #+#    #+#             */
+/*   Updated: 2018/12/02 18:55:23 by cempassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <string.h>
+#include <stdlib.h>
+#include "libft.h"
 
-int		basic_test(void)
+int		segfault_test(void)
 {
-	if (ft_strlen("Hello") == strlen("Hello"))
+	if (strlen(NULL))
 		return (0);
-	else
-		return (-1);
+	else 
+		return (1);
 }

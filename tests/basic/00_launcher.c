@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libunit.h                                          :+:      :+:    :+:   */
+/*   00_launcher.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cempassi <cempassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/02 13:27:55 by cempassi          #+#    #+#             */
-/*   Updated: 2018/12/02 19:44:24 by cempassi         ###   ########.fr       */
+/*   Created: 2018/12/02 16:43:43 by cempassi          #+#    #+#             */
+/*   Updated: 2018/12/02 18:46:53 by cempassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBUNIT_H
-# define LIBUNIT_H
-# define TEST(x) ((t_test *)(to_test->data))->x
-# include "libft.h"
-# define RED "\x1b[031m"
-# define GREEN "\x1b[32m"
-# define YELLOW "\x1b[033m"
-# define BLUE "\x1b[034m"
-# define NC "\x1b[0m"
+#include "basic_tests.h"
+#include "libunit.h"
 
-int 	run_test(t_list **testList);
-void	load_test(t_list **lst, char *name, int (*f)(void));
+int		strlen_launcher(void)
+{
+	t_list *testList;
 
-typedef struct	s_test{
-	char	*name;
-	int		(*test)(void);
-}				t_test;
-#endif
+	testList = NULL;
+	ft_putstr("Basic tests :\n");
+	load_test(&testList, "Ok test", ok_test);
+	load_test(&testList, "Ko test", ko_test);
+	load_test(&testList, "Segmentation fault test", segfault_test);
+	load_test(&testList, "Buss error test", buss_test);
+	return (run_test(&testList));
+}

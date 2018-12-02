@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   00_launcher.c                                      :+:      :+:    :+:   */
+/*   basic_tests.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cempassi <cempassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/02 16:43:43 by cempassi          #+#    #+#             */
-/*   Updated: 2018/12/02 17:23:00 by cempassi         ###   ########.fr       */
+/*   Created: 2018/12/02 18:41:10 by cempassi          #+#    #+#             */
+/*   Updated: 2018/12/02 18:47:09 by cempassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "01_basic_test.h"
-#include "libunit.h"
+#ifndef BASIC_TEST_H
+# define BASIC_TEST_H
 
-int		strlen_launcher(void)
-{
-	t_list *testList;
-
-	testList = NULL;
-	load_test(&testList, "Basic test", basic_test);
-	return (run_test(&testList));
-}
+int		ok_test(void);
+int		ko_test(void);
+int		segfault_test(void);
+int		buss_test(void);
+#endif

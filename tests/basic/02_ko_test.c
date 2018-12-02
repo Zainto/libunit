@@ -1,17 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   01_basic_test.h                                    :+:      :+:    :+:   */
+/*   02_ko_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cempassi <cempassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/02 16:50:17 by cempassi          #+#    #+#             */
-/*   Updated: 2018/12/02 17:14:25 by cempassi         ###   ########.fr       */
+/*   Created: 2018/12/02 18:26:13 by cempassi          #+#    #+#             */
+/*   Updated: 2018/12/02 18:47:42 by cempassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BASIC_TEST_H
-# define BASIC_TEST_H
+#include <string.h>
+#include "libft.h"
 
-int		basic_test(void);
-#endif
+int		ko_test(void)
+{
+	if (ft_strlen("Wesh, bien ou bien?") == 2)
+		return (0);
+	else
+		return (-1);
+}

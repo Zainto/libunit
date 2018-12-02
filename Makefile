@@ -30,7 +30,6 @@ INCS += libft.h
 INCS += libunit.h
 
 SRCS += $(PATHS)run_test.c
-SRCS += $(PATHS)signal_catcher.c
 OBJS = $(patsubst $(PATHS)%.c, $(PATHO)%.o, $(SRCS))
 
 WFLAGS +=-Wall
