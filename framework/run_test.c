@@ -6,7 +6,7 @@
 /*   By: cempassi <cempassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 05:38:31 by cempassi          #+#    #+#             */
-/*   Updated: 2018/12/02 13:41:17 by cempassi         ###   ########.fr       */
+/*   Updated: 2018/12/02 14:43:15 by cempassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,33 +16,58 @@
 #include <stdlib.h>
 #include "libft.h"
 #include "libunit.h"
-/*
+#include <string.h>
+
+static void sigbuss_catch(int signal)
+{
+	(void)signal;
+	ft_putendl("Sigbuss caught");
+	exit(EXIT_FAILURE);
+}
+
+
+static void sigsegv_catch(int signal)
+{
+	(void)signal;
+	ft_putendl("Segfault caught");
+	exit(EXIT_FAILURE);
+}
+
 static void	init_signal_catcher(void)
 {
-	if (signal(SIGINT, update_prompt) == SIG_ERR)
-		ft_putendl("Error occured catching the SIGINT.");
-	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
-		ft_putendl("Error occured catching the SIGQUIT.");
-	if (signal(SIGTSTP, SIG_IGN) == SIG_ERR)
-		ft_putendl("Error occured catching the SIGTSTP.");
+	if (signal(SIGBUS, sigbuss_catch) == SIG_ERR)
+		ft_putendl("Error occured catching the SIGBUS.");
+	if (signal(SIGSEGV, sigsegv_catch) == SIG_ERR)
+		ft_putendl("Error occured catching the SIGSEGV.");
 }
-*/
+
+
 int run_test(void)
 {
 	int		i;
 	int		checker;
+	char	*buss_error = "Yo";
+	char	*segv = NULL;
 	pid_t	process;
 
 	i = 0;
-	process = fork();
-	if (process == 0)
+	while (i < 2)
 	{
-		wait(&checker);
-		printf("process : %d\n", process);
-	}
-	else  
-	{
-		printf("process : %d\n", process);
+		init_signal_catcher();
+		i++;
+		process = fork();
+		if (process == 0)
+		{
+			wait(&checker);
+			printf("process : %d\n", process);
+		}
+		else if (i == 1) 
+			*buss_error = 'c';	
+		else if (i == 2)
+		{
+			ft_putstr("Ready to segv\n");
+			strlen(segv);
+		}
 	}
 	return (0);
 }

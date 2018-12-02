@@ -15,14 +15,14 @@ CYAN=\033[0;36m
 WHITE=\033[0;37m
 
 NAME = libunit.a
-EXEC = Test
-LIBFT = libft.a
+EXEC = test
+LIBFT = $(PATHL)libft.a
 CLEANUP =rm -rf
 MKDIR = mkdir -p
 
 PATHO =objs/
 PATHI =includes/
-PATHL = libft/
+PATHL =libft/
 PATHILIB =libft/includes/
 
 INCS += libft.h
@@ -35,7 +35,7 @@ OBJS =$(patsubst %.c, $(PATHO)%.o, $(SRCS))
 WFLAGS +=-Wall
 WFLAGS +=-Werror
 WFLAGS +=-Wextra
-IFLAGS =-I $(PATHI) -I$(PATHILIB)
+IFLAGS =-I$(PATHI) -I$(PATHILIB)
 CFLAGS =$(WFLAGS)
 
 .PHONY: all clean fclean
@@ -52,7 +52,7 @@ $(NAME): $(OBJS) $(LIBFT)
 	@printf "$(GREEN)$@ is ready.\n$(NC)"
 
 $(EXEC): $(NAME)
-	$(CC) $(IFLAGS) -o $@ $(NAME) main.c
+	$(CC) $(IFLAGS) -o $@ $(NAME) $(LIBFT) main.c
 
 $(LIBFT) : 
 	$(MAKE) -C $(PATHL) 
