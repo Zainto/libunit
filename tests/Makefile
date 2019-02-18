@@ -1,5 +1,6 @@
 CC = Clang
 COMPILE = $(CC) -c
+DEBUG = $(CC) -c -g
 
 # Reset
 NC=\033[0m
@@ -16,78 +17,83 @@ WHITE=\033[0;37m
 
 NAME = UnitTest
 LIBFT = $(PATHL)libft.a
-LIBUT = $(PATHU)libunit.a
+LIBFTDB = $(PATHL)libftdb.a
 CLEANUP =rm -rf
 MKDIR = mkdir -p
 
 PATHO =objs/
 PATHI =includes/
 PATHL =../libft/
-PATHU =../
 PATHILIBFT =../libft/includes/
-PATHILIBUT =../includes/
 
 PATHBASIC = basic/
 INCS += libft.h
-INCS += libunit.h
 INCS += unittest.h
 
 SRCS += main.c
-_SRCSTRLEN += $(PATHBASIC)00_launcher.c
-_SRCSTRLEN += $(PATHBASIC)01_basic_test.c
-_SRCSTRLEN += $(PATHBASIC)02_ko_test.c
-_SRCSTRLEN += $(PATHBASIC)03_segfault_test.c
-_SRCSTRLEN += $(PATHBASIC)04_buss_error_test.c
+SRCS += 00_launcher.c
+SRCS += 01_basic_test.c
+SRCS += 02_ko_test.c
+SRCS += 03_segfault_test.c
+SRCS += 04_buss_error_test.c
 
-_OBJS = $(patsubst %.c, $(PATHO)%.o, $(SRCS))
-_OBJSTRLEN = $(patsubst $(PATHBASIC)%.c, $(PATHO)%.o, $(_SRCSTRLEN))
-OBJS = $(_OBJS) $(_OBJSTRLEN)
+OBJS = $(patsubst %.c, $(PATHO)%.o, $(SRCS))
+OBJD = $(patsubst %.c, $(PATHO)db%.o, $(SRCS))
 
 WFLAGS +=-Wall
 WFLAGS +=-Werror
 WFLAGS +=-Wextra
-IFLAGS =-I$(PATHI) -I$(PATHILIBFT) -I$(PATHILIBUT)
+DFLAGS +=-fsanitize=address
+IFLAGS =-I$(PATHI) -I$(PATHILIBFT)
 CFLAGS =$(WFLAGS)
 
-.PHONY: all clean fclean
-.SILENT: 
-
 vpath %.c basic
-vpath %.h includes
-vpath %.h ../includes 
+vpath %.h includes 
 vpath %.h ../libft/includes
 
-all : $(PATHO) $(NAME)
+all : $(PATHO) $(LIBFT) $(NAME)
 
-$(NAME): $(LIBFT) $(LIBUT) $(OBJS)
+$(NAME): $(LIBFT) $(OBJS)
 	$(CC) -o $@ $^
 	@printf "$(GREEN)$@ is ready.\n$(NC)"
+
+debug : $(PATHO) $(LIBFTDB) $(OBJD)
+	$(CC) $(DFLAGS) $(LIBFTDB) $(OBJD) -o $(NAME)
+	./$(NAME)
 
 test : $(PATHO) $(NAME)
 	./$(NAME)
 
-$(LIBFT) : 
+$(LIBFT) : FORCE
 	$(MAKE) -C $(PATHL) 
 
-$(LIBUT) : 
-	$(MAKE) -C $(PATHU) 
+$(LIBFTDB) : FORCE
+	$(MAKE) -C $(PATHL) debug
 
 $(OBJS): $(PATHO)%.o : %.c $(INCS)
 	$(COMPILE) $(CFLAGS) $(IFLAGS) $< -o $@
+	@printf "$(BLUE)Compiling for debug $<\n$(NC)"
+
+$(OBJD): $(PATHO)db%.o : %.c $(INCS)
+	$(DEBUG) $(CFLAGS) $(DFLAGS) $(IFLAGS) $< -o $@
 	@printf "$(BLUE)Compiling $<\n$(NC)"
 
 $(PATHO) :
 	$(MKDIR) $(PATHO)
 
 clean:
+	$(MAKE) -C $(PATHL) clean
 	@$(CLEANUP) $(PATHO)*.o
 	@printf "$(RED)All *.o files for UnitTest removed\n$(NC)"
-	$(MAKE) -C $(PATHU) clean
 
 fclean: clean
+	$(MAKE) -C $(PATHL) fclean
 	$(CLEANUP) $(NAME)
 	$(CLEANUP) $(PATHO)
-	$(MAKE) -C $(PATHU) fclean
 	@printf "$(RED)$(NAME) deleted\n$(NC)"
 
 re : fclean all
+
+FORCE:
+.PHONY: all clean fclean
+.SILENT: 

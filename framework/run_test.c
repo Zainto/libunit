@@ -6,7 +6,7 @@
 /*   By: cempassi <cempassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 05:38:31 by cempassi          #+#    #+#             */
-/*   Updated: 2018/12/02 19:45:32 by cempassi         ###   ########.fr       */
+/*   Updated: 2019/02/18 01:53:27 by cempassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "libunit.h"
 
 
-static void signal_catch(int signal)
+static void		signal_catch(int signal)
 {
 	if (WTERMSIG(signal) == SIGSEGV)
 		ft_putendl(RED" [SEGV]"NC);
@@ -26,7 +26,7 @@ static void signal_catch(int signal)
 	exit(3);
 }
 
-static void	init_signal_catcher(void)
+static void		init_signal_catcher(void)
 {
 	if (signal(SIGBUS, signal_catch) == SIG_ERR)
 		ft_putendl("Error occured catching the SIGBUS.");
@@ -49,7 +49,7 @@ static t_list	*parent_manager(t_list	*to_test)
 	return (to_test->next);
 }
 
-void	load_test(t_list **lst, char *name, int (*f)(void))
+void			load_test(t_list **lst, char *name, int (*f)(void))
 {
 	t_list	*current;
 	t_test	tmp;
@@ -61,7 +61,7 @@ void	load_test(t_list **lst, char *name, int (*f)(void))
 	return;
 }
 
-int run_test(t_list **testList)
+int				run_test(t_list **testList)
 {
 	t_list	*to_test;
 	pid_t	process;
